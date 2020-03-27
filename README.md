@@ -17,44 +17,53 @@ $ npx alseta [command]
 ## Usage
 
 ```
-  Manage dependency versions across repos (mono or otherwise).
-
   Usage
-   $ alseta [command]
+    $ alseta <command> [options]
 
   Available Commands
-   $ alseta update
-   $ alseta verify
+    update    Update dependencies in a package according to an alseta configuration.
+    verify    Verify that all dependencies are in compliance with an alseta configuration.
+
+  For more info, run any command with the `--help` flag
+    $ alseta update --help
+    $ alseta verify --help
+
+  Options
+    -w, --workspace    When set alseta will look for a yarn workspace setup  (default false)
+    -v, --version      Displays current version
+    -h, --help         Displays this message
 ```
 
 ### update
 
 ```
-  Usage
-      $ alseta update
-
   Description
-      Update dependencies in a package according to an alseta configuration.
+    Update dependencies in a package according to an alseta configuration.
+
+  Usage
+    $ alseta update [options]
 
   Options
-      -i, --install           Run `yarn install` after all dependencies have been updated
-      -w, --workspace         When set alseta will look for a yarn workspace setup and update dependencies on each package
-      -s, --skip-overage      When alseta encounters a dependency that is on a higher version than the config calls for, skip
+    -i, --install         Run `yarn install` after all dependencies have been updated  (default false)
+    -s, --skip-overage    When alseta encounters a dependency that is on a higher version than the config calls for, skip  (default false)
+    -w, --workspace       When set alseta will look for a yarn workspace setup  (default false)
+    -h, --help            Displays this message
 ```
 
 ### verify
 
 ```
-  Usage
-      $ alseta verify
-
   Description
-      Verify that all dependencies are in compliance with an alseta configuration.
+    Verify that all dependencies are in compliance with an alseta configuration.
+
+  Usage
+    $ alseta verify [options]
 
   Options
-      --programmatic       By default alseta will print out a human readable error message, this will print the errors as a JSON array
-      -w, --workspace      When set alseta will look for a yarn workspace setup and verify dependencies on each package
-      --warn               By default alseta will error if it encounters a mismatch, warn will log to stdout and complete with exit(0)
+    --programmatic     By default alseta will print out a human readable error message, this will print the errors as a JSON array  (default false)
+    --warn             By default alseta will error if it encounters a mismatch, warn will log to stdout and complete with exit(0)  (default false)
+    -w, --workspace    When set alseta will look for a yarn workspace setup  (default false)
+    -h, --help         Displays this message
 ```
 
 ## Continuous Integration (CI)
