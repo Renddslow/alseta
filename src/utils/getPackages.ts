@@ -8,7 +8,7 @@ import catchify from 'catchify';
 import getConfigLocation from './getConfigLocation';
 import fetchConfig from './fetchConfig';
 
-const getPackages = async (cli) => {
+const getPackages = async (flags: Record<string, boolean>) => {
   const rootPkg = await pkgUp({ normalize: false });
 
   if (!rootPkg) {
@@ -44,7 +44,7 @@ const getPackages = async (cli) => {
     },
   ];
 
-  if (cli.flags.workspace && rootPkg.packageJson.workspaces) {
+  if (flags.workspace && rootPkg.packageJson.workspaces) {
     const workspaces = <Array<string>>rootPkg.packageJson.workspaces;
     const paths = await globby(workspaces.map((w) => `${w}/package.json`));
 

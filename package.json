@@ -15,7 +15,7 @@
     "build": "tsc -d",
     "start": "node dist/index.js",
     "prestart": "yarn build",
-    "prepare": "yarn build",
+    "prepublishOnly": "yarn build",
     "test": "ava"
   },
   "husky": {
@@ -50,9 +50,8 @@
     "kleur": "^3.0.3",
     "klona": "^1.1.1",
     "load-json-file": "^6.2.0",
-    "meow": "^6.1.0",
-    "pkg-up": "^3.1.0",
     "read-pkg-up": "^7.0.1",
+    "sade": "^1.7.3",
     "semver": "^7.1.3",
     "write-json-file": "^4.3.0"
   },

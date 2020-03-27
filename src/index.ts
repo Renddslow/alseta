@@ -1,99 +1,40 @@
 #!/usr/bin/env node
 'use strict';
-import meow from 'meow';
+import sade from 'sade';
 
 import verify from './commands/verify';
 import update from './commands/update';
 
-const prop = (k) => (o) => o[k];
-const pipe = (...fns) => (x) => [...fns].reduce((acc, f) => f(acc), x);
+const prog = sade('alseta');
 
-const alseta = () => ({
-  cli: meow(`
-      Usage
-       $ alseta [command]
-      
-      Available Commands
-       $ alseta update
-       $ alseta verify
-  `),
-  action: (cli) => cli.showHelp(0),
-});
+prog
+  .version('0.1.0')
+  .option('-w, --workspace', 'When set alseta will look for a yarn workspace setup', false);
 
-alseta.update = () => ({
-  cli: meow(
-    `
-    Usage
-        $ alseta update
-        
-    Description
-        Update dependencies in a package according to an alseta configuration.
-    
-    Options
-        -i, --install          Run \`yarn install\` after all dependencies have been updated
-        -w, --workspace        When set alseta will look for a yarn workspace setup and update dependencies on each package
-        -s, --skip-overage     When alseta encounters a dependency that is on a higher version than the config calls for, skip
-   `,
-    {
-      flags: {
-        install: {
-          type: 'boolean',
-          alias: 'i',
-        },
-        workspace: {
-          type: 'boolean',
-          alias: 'w',
-        },
-        'skip-overage': {
-          type: 'boolean',
-          alias: 's',
-        },
-      },
-    },
-  ),
-  action: update,
-});
+prog
+  .command('update')
+  .describe('Update dependencies in a package according to an alseta configuration.')
+  .option('-i, --install', 'Run `yarn install` after all dependencies have been updated', false)
+  .option(
+    '-s, --skip-overage',
+    'When alseta encounters a dependency that is on a higher version than the config calls for, skip',
+    false,
+  )
+  .action(update);
 
-alseta.verify = () => ({
-  cli: meow(
-    `
-    Usage
-        $ alseta verify
-    
-    Description
-        Words
-    
-    Options
-        --programmatic      By default alseta will print out a human readable error message, this will print the errors as a JSON array
-        --warn              By default alseta will error if it encounters a mismatch, warn will log to stdout and complete with exit(0)
-        -w, --workspace     When set alseta will look for a yarn workspace setup and update dependencies on each package
-  `,
-    {
-      flags: {
-        programmatic: {
-          type: 'boolean',
-        },
-        workspace: {
-          type: 'boolean',
-          alias: 'w',
-        },
-        warn: {
-          type: 'boolean',
-        },
-      },
-    },
-  ),
-  action: verify,
-});
+prog
+  .command('verify')
+  .describe('Verify that all dependencies are in compliance with an alseta configuration.')
+  .option(
+    '--programmatic',
+    'By default alseta will print out a human readable error message, this will print the errors as a JSON array',
+    false,
+  )
+  .option(
+    '--warn',
+    'By default alseta will error if it encounters a mismatch, warn will log to stdout and complete with exit(0)',
+    false,
+  )
+  .action(verify);
 
-const getSubcommand = (cliObj, level) =>
-  pipe(prop('input'), prop(level), (name) => prop(name)(cliObj))(prop('cli')(cliObj()));
-
-const cli = (cliObj, level = 0) => {
-  const { cli: nextCli, action } = cliObj();
-  const subCommand = getSubcommand(cliObj, level);
-  const runNextCli = (n) => (n.flags.help ? n.showHelp(0) : action(n));
-  return subCommand ? cli(subCommand, level + 1) : runNextCli(nextCli);
-};
-
-cli(alseta);
+prog.parse(process.argv);

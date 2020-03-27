@@ -2,8 +2,8 @@ import getPackages from '../../utils/getPackages';
 import verifyPackage from './verifyPackage';
 import kleur from 'kleur';
 
-const verify = async (cli) => {
-  const { pkgs, config } = await getPackages(cli);
+const verify = async (flags: Record<string, boolean>) => {
+  const { pkgs, config } = await getPackages(flags);
 
   const pkgErrors = pkgs.reduce((acc, { pkg, path }) => {
     const errs = verifyPackage(pkg, config);
@@ -23,9 +23,9 @@ const verify = async (cli) => {
     process.exit(0);
   }
 
-  const logger = cli.flags.warn ? console.warn : console.error;
+  const logger = flags.warn ? console.warn : console.error;
 
-  if (cli.flags.programmatic) {
+  if (flags.programmatic) {
     logger(JSON.stringify(pkgErrors, null, 2));
   } else {
     pkgErrors.forEach(({ name, errors, path }) => {
@@ -40,7 +40,7 @@ const verify = async (cli) => {
     });
   }
 
-  const exitCode = cli.flags.warn ? 0 : 2;
+  const exitCode = flags.warn ? 0 : 2;
   process.exit(exitCode);
 };
 
