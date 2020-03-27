@@ -15,6 +15,7 @@
     "build": "tsc -d",
     "start": "node dist/index.js",
     "prestart": "yarn build",
+    "prepare": "yarn build",
     "test": "ava"
   },
   "husky": {
