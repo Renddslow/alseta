@@ -30,7 +30,7 @@ export const getConfigLocation = (globby: (string) => Promise<Array<string>>) =>
   const paths = await globby('alseta.config.json');
   if (!paths.length) {
     throw new Error(
-      'alseta config could not be found.\nPlace one in your package.json under "alseta" or at the root of your project in "alseta.config.json"',
+      'Alseta config could not be found.\nPlace one in your package.json under "alseta" or at the root of your project in "alseta.config.json"',
     );
   }
 
