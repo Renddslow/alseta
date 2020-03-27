@@ -8,8 +8,7 @@ const fetchConfig = async (configLocation: ConfigLocation): Promise<Record<strin
     return got(configLocation.location)
       .then(({ body }) => JSON.parse(body.toString()))
       .catch((e) => {
-        console.error(e);
-        process.exit(2);
+        throw new Error(e);
       });
   }
 
@@ -18,8 +17,7 @@ const fetchConfig = async (configLocation: ConfigLocation): Promise<Record<strin
       try {
         resolve(require(configLocation.location));
       } catch (e) {
-        console.error(e);
-        process.exit(2);
+        throw new Error(e);
       }
     });
   }
