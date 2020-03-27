@@ -8,30 +8,30 @@ import update from './commands/update';
 const prop = (k) => (o) => o[k];
 const pipe = (...fns) => (x) => [...fns].reduce((acc, f) => f(acc), x);
 
-const alesta = () => ({
+const alseta = () => ({
   cli: meow(`
       Usage
-       $ alesta [command]
+       $ alseta [command]
       
       Available Commands
-       $ alesta update
-       $ alesta verify
+       $ alseta update
+       $ alseta verify
   `),
   action: (cli) => cli.showHelp(0),
 });
 
-alesta.update = () => ({
+alseta.update = () => ({
   cli: meow(
     `
     Usage
-        $ alesta update
+        $ alseta update
         
     Description
-        Update dependencies in a package according to an alesta configuration.
+        Update dependencies in a package according to an alseta configuration.
     
     Options
-        -i, --install           Run \`yarn install\` after all dependencies have been updated
-        -w, --workspace         When set alseta will look for a yarn workspace setup and update dependencies on each package
+        -i, --install          Run \`yarn install\` after all dependencies have been updated
+        -w, --workspace        When set alseta will look for a yarn workspace setup and update dependencies on each package
         -s, --skip-overage     When alseta encounters a dependency that is on a higher version than the config calls for, skip
    `,
     {
@@ -54,16 +54,17 @@ alesta.update = () => ({
   action: update,
 });
 
-alesta.verify = () => ({
+alseta.verify = () => ({
   cli: meow(`
     Usage
-        $ alesta verify
+        $ alseta verify
     
     Description
         Words
     
     Options
-        --warn  By default alseta will error if it encounters a mismatch, warn will log to stdout and complete with exit(0)       
+        --warn              By default alseta will error if it encounters a mismatch, warn will log to stdout and complete with exit(0)
+        -w, --workspace     When set alseta will look for a yarn workspace setup and update dependencies on each package
   `),
   action: verify,
 });
@@ -78,4 +79,4 @@ const cli = (cliObj, level = 0) => {
   return subCommand ? cli(subCommand, level + 1) : runNextCli(nextCli);
 };
 
-cli(alesta);
+cli(alseta);

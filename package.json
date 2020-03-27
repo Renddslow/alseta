@@ -1,14 +1,14 @@
 {
-  "name": "alesta",
+  "name": "alseta",
   "version": "0.1.0",
   "private": false,
   "description": "Manage dependency versions across repos (mono or otherwise).",
-  "repository": "https://github.com/Renddslow/alesta",
+  "repository": "https://github.com/Renddslow/alseta",
   "license": "MIT",
   "author": "Matt McElwee <mubatt@wyopub.com>",
   "main": "dist/index.js",
   "bin": {
-    "alesta": "dist/index.js"
+    "alseta": "dist/index.js"
   },
   "scripts": {
     "prebuild": "del dist",

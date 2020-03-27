@@ -2,12 +2,7 @@ import { get, set } from 'dot-prop';
 import klona from 'klona';
 import semver from 'semver';
 
-const dependencyKeys = [
-  'dependencies',
-  'optionalDependencies',
-  'peerDependencies',
-  'devDependencies',
-];
+import dependencyKeys from '../../utils/dependencyKeys';
 
 const updatePackage = (
   pkg: Record<string, any>,

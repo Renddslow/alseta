@@ -7,30 +7,30 @@ export interface ConfigLocation {
 }
 
 export const getConfigLocation = (globby: (string) => Promise<Array<string>>) => async ({
-  alesta,
+  alseta,
 }: Record<string, string>): Promise<ConfigLocation> => {
-  if (alesta) {
-    if (isAbsoluteUrl(alesta)) {
+  if (alseta) {
+    if (isAbsoluteUrl(alseta)) {
       return new Promise((r) =>
         r({
           type: 'url',
-          location: alesta,
+          location: alseta,
         }),
       );
     } else {
       return new Promise((r) =>
         r({
           type: 'pkg',
-          location: alesta,
+          location: alseta,
         }),
       );
     }
   }
 
-  const paths = await globby('alesta.config.json');
+  const paths = await globby('alseta.config.json');
   if (!paths.length) {
     throw new Error(
-      'Alesta config could not be found.\nPlace one in your package.json under "alesta" or at the root of your project in "alesta.config.json"',
+      'alseta config could not be found.\nPlace one in your package.json under "alseta" or at the root of your project in "alseta.config.json"',
     );
   }
 

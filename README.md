@@ -1,17 +1,17 @@
-# alesta
+# alseta
 
 > Manage dependency versions across repos (mono or otherwise).
 
 ## Install
 
 ```
-$ yarn add alesta
+$ yarn add alseta
 ```
 
 Or run it with npx
 
 ```
-$ npx alesta [command]
+$ npx alseta [command]
 ```
 
 ## Usage
@@ -20,21 +20,21 @@ $ npx alesta [command]
   Manage dependency versions across repos (mono or otherwise).
 
   Usage
-   $ alesta [command]
+   $ alseta [command]
 
   Available Commands
-   $ alesta update
-   $ alesta verify
+   $ alseta update
+   $ alseta verify
 ```
 
 ### update
 
 ```
   Usage
-      $ alesta update
+      $ alseta update
 
   Description
-      Update dependencies in a package according to an alesta configuration.
+      Update dependencies in a package according to an alseta configuration.
 
   Options
       -i, --install           Run `yarn install` after all dependencies have been updated
@@ -46,10 +46,10 @@ $ npx alesta [command]
 
 ```
   Usage
-      $ alesta verify
+      $ alseta verify
 
   Description
-      Verify that all dependencies are in compliance with an alesta configuration.
+      Verify that all dependencies are in compliance with an alseta configuration.
 
   Options
       -w, --workspace      When set alseta will look for a yarn workspace setup and verify dependencies on each package
@@ -58,6 +58,6 @@ $ npx alesta [command]
 
 ## Continuous Integration (CI)
 
-Alesta was designed to be used in a CI environment, but there are several ways it can be used. The most "end to end" option is to check if `yarn.lock` is in the committed files, then run `alesta verify --warn`. If the verify step has a message then verification failed, at which point `alesta update` can be run to update. This leverages the fact that your yarn.lock is different, which is often the trigger for busting a CI cache. If however your cache works differently, the install step may be necessary.
+Alseta was designed to be used in a CI environment, but there are several ways it can be used. The most "end to end" option is to check if `yarn.lock` is in the committed files, then run `alseta verify --warn`. If the verify step has a message then verification failed, at which point `alseta update` can be run to update. This leverages the fact that your yarn.lock is different, which is often the trigger for busting a CI cache. If however your cache works differently, the install step may be necessary.
 
-If you're concerned about dependency updates causing downstream issues, ~~then you should probbly have unit and integration tests~~ you can just add `alesta verify` as a test script. If it fails, your build will fail which allows a reviewer and the developer to fix the problem manually.
+If you're concerned about dependency updates causing downstream issues, ~~then you should probbly have unit and integration tests~~ you can just add `alseta verify` as a test script. If it fails, your build will fail which allows a reviewer and the developer to fix the problem manually.

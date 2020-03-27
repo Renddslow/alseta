@@ -26,7 +26,7 @@ const getPackages = async (cli) => {
   }
 
   if (!configLocationErr && !configLocation) {
-    console.error(kleur.red('Could not find a configuration file for alesta.'));
+    console.error(kleur.red('Could not find a configuration file for alseta.'));
     process.exit(2);
   }
 
