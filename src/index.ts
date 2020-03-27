@@ -27,7 +27,7 @@ alesta.update = () => ({
         $ alesta update
         
     Description
-        Words. I have the best words /* TODO */
+        Update dependencies in a package according to an alesta configuration.
     
     Options
         -i, --install           Run \`yarn install\` after all dependencies have been updated
