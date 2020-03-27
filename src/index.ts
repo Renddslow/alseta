@@ -55,7 +55,8 @@ alseta.update = () => ({
 });
 
 alseta.verify = () => ({
-  cli: meow(`
+  cli: meow(
+    `
     Usage
         $ alseta verify
     
@@ -63,9 +64,25 @@ alseta.verify = () => ({
         Words
     
     Options
+        --programmatic      By default alseta will print out a human readable error message, this will print the errors as a JSON array
         --warn              By default alseta will error if it encounters a mismatch, warn will log to stdout and complete with exit(0)
         -w, --workspace     When set alseta will look for a yarn workspace setup and update dependencies on each package
-  `),
+  `,
+    {
+      flags: {
+        programmatic: {
+          type: 'boolean',
+        },
+        workspace: {
+          type: 'boolean',
+          alias: 'w',
+        },
+        warn: {
+          type: 'boolean',
+        },
+      },
+    },
+  ),
   action: verify,
 });
 

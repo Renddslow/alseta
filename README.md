@@ -52,6 +52,7 @@ $ npx alseta [command]
       Verify that all dependencies are in compliance with an alseta configuration.
 
   Options
+      --programmatic       By default alseta will print out a human readable error message, this will print the errors as a JSON array
       -w, --workspace      When set alseta will look for a yarn workspace setup and verify dependencies on each package
       --warn               By default alseta will error if it encounters a mismatch, warn will log to stdout and complete with exit(0)
 ```
