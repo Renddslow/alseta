@@ -40,11 +40,13 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "catchify": "^2.6.1",
     "dequal": "^1.0.0",
     "dot-prop": "^5.2.0",
     "globby": "^11.0.0",
     "got": "^10.6.0",
     "is-absolute-url": "^3.0.3",
+    "kleur": "^3.0.3",
     "klona": "^1.1.1",
     "load-json-file": "^6.2.0",
     "meow": "^6.1.0",

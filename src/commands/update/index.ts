@@ -2,6 +2,9 @@ import pkgUp from 'read-pkg-up';
 import globby from 'globby';
 import loadJsonFile from 'load-json-file';
 import path from 'path';
+import { execSync } from 'child_process';
+import kleur from 'kleur';
+import catchify from 'catchify';
 
 import getConfigLocation from './getConfigLocation';
 import fetchConfig from './fetchConfig';
@@ -13,20 +16,31 @@ const update = async (cli: Record<string, any>) => {
   const rootPkg = await pkgUp({ normalize: false });
 
   if (!rootPkg) {
-    console.error(''); // TODO
+    console.error(kleur.red('Could not find a root package. Are you sure this is a node module?'));
     process.exit(2);
   }
 
-  const configLocation = await getConfigLocation(<Record<string, string>>rootPkg.packageJson);
+  const [configLocationErr, configLocation] = await catchify(
+    getConfigLocation(<Record<string, string>>rootPkg.packageJson),
+  );
 
-  if (!configLocation) {
-    console.error(''); // TODO
+  if (configLocationErr) {
+    console.error(kleur.red(configLocationErr.message));
     process.exit(2);
   }
 
-  const config = await fetchConfig(configLocation);
+  if (!configLocationErr && !configLocation) {
+    console.error(kleur.red('Could not find a configuration file for alesta.'));
+    process.exit(2);
+  }
 
-  console.log(config);
+  const [configErr, config] = await catchify(fetchConfig(configLocation));
+
+  if (configErr) {
+    console.error(kleur.red(configErr.message));
+    process.exit(2);
+  }
+
   let pkgs = [
     {
       pkg: <Record<string, string>>rootPkg.packageJson,
@@ -58,10 +72,14 @@ const update = async (cli: Record<string, any>) => {
         return acc;
       }, [])
       .map(({ path, pkg }) => {
-        console.log(`Updating dependencies in ${pkg.name} at ${path}`);
+        console.log(kleur.yellow(`🏗 Updating dependencies in ${pkg.name}`));
         return writeJsonFile(path, pkg, { indent: 2 });
       }),
   );
+
+  if (cli.flags.install) {
+    execSync('yarn', { stdio: 'inherit' });
+  }
 };
 
 export default update;
