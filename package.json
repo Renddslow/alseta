@@ -1,6 +1,6 @@
 {
   "name": "alseta",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "Manage dependency versions across repos (mono or otherwise).",
   "repository": "https://github.com/Renddslow/alseta",
