@@ -66,6 +66,21 @@ $ npx alseta [command]
     -h, --help         Displays this message
 ```
 
+### Config
+
+Alseta relies on a config file to determine which version of a package to enforce. The config file may be defined as a json file at the root of your file: `alseta.config.json`, in the package.json under the key `alseta`, or as a URL which will resolve a remote Alseta config in JSON format.
+
+The config must have a top-level object where each key is a `pkg.name` and each value is the corresponding `pkg.version`.
+
+Example:
+
+```json
+{
+  "dot-prop": "5.1.1",
+  "klona": "1.1.1"
+}
+```
+
 ## Continuous Integration (CI)
 
 Alseta was designed to be used in a CI environment, but there are several ways it can be used. The most "end to end" option is to check if `yarn.lock` is in the committed files, then run `alseta verify --warn`. If the verify step has a message then verification failed, at which point `alseta update` can be run to update. This leverages the fact that your yarn.lock is different, which is often the trigger for busting a CI cache. If however your cache works differently, the install step may be necessary.
